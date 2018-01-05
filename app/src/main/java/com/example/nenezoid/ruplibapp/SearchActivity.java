@@ -33,7 +33,7 @@ public class SearchActivity extends AppCompatActivity {
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="https://ruppin-primo.hosted.exlibrisgroup.com/primo-explore/search?query=any,contains,networking&tab=default_tab&search_scope=default_scope&vid=972RCO_INST_V1&lang=iw_IL&offset=0"; //networking is the search key here
+        String url ="https://ruppin-primo.hosted.exlibrisgroup.com/primo_library/libweb/webservices/rest/primo-explore/v1/pnxs?addfields=vertitle,title,collection,creator,contributor,subject,ispartof,description,relation&getMore=0&inst=972RCO_INST&lang=iw_IL&limit=10&offset=0&pcAvailability=true&q=any,contains,"+strSearchKey+"&qExclude=&qInclude=&rtaLinks=true&scope=default_scope&skipDelivery=Y&sort=rank&tab=default_tab&vid=972RCO_INST_V1"; //networking is the search key here
 
         // Request a string response from the provided URL.
 
