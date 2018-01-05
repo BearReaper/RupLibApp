@@ -11,6 +11,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setTitle("Ruppin Library App");
 
 //        findViewById(R.id.freeButton).setOnClickListener(new View.OnClickListener() {
 //            @Override
