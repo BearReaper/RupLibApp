@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -27,8 +29,9 @@ import java.util.List;
 
 public class SearchActivity extends AppCompatActivity {
 
-    //ArrayList<String> list = new ArrayList<>();
-    //ListView listy;
+    ArrayList<String> list = new ArrayList<>();
+    ListView listy;
+
 
 
 
@@ -45,20 +48,22 @@ public class SearchActivity extends AppCompatActivity {
             strSearchKey = (String)b.getString("Title");
         Toast.makeText(SearchActivity.this,strSearchKey,Toast.LENGTH_LONG).show(); // find out if the intent went OK
 
-        final TextView resText = (TextView) findViewById(R.id.resposeText); // instance an object for the http resonse
+        //final TextView resText = (TextView) findViewById(R.id.resposeText); // instance an object for the http resonse
 
+        listy = findViewById(R.id.myList);
+        final ArrayAdapter<String> itemsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,list);
+        listy.setAdapter(itemsAdapter);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Books");
 
-        myRef.orderByChild("title").addChildEventListener(new ChildEventListener() {
+        myRef.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 String res = dataSnapshot.getValue().toString();
-                resText.setText(res);
-                Toast.makeText(getApplicationContext(),res,Toast.LENGTH_SHORT).show();
-
-
+                //resText.setText(res);
+                list.add(res);
+                itemsAdapter.notifyDataSetChanged();
+                //Toast.makeText(getApplicationContext(),res,Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -81,6 +86,15 @@ public class SearchActivity extends AppCompatActivity {
 
             }
         });
+
+        listy.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                //Some code for fetching and using the gridview possition and etc.
+            }
+        });
+
 
 
     }
