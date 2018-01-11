@@ -6,15 +6,22 @@ package com.example.nenezoid.ruplibapp;
 
 public class Book {
 
-    private int id;
-    private String title,author;
-    private boolean isAviable;
+    public int id;
+    public String title,author;
+    public boolean available;
 
-    public Book(int id_, String title_, String author_, boolean isAviable_){
+    public Book(int id_, String title_, String author_, boolean available_){
         this.id=id_;
         this.title=title_;
         this.author=author_;
-        this.isAviable=isAviable_;
+        this.available=available_;
+    }
+
+    public Book(){}
+
+    public String toString()
+    {
+        return "Title: "+title+"\nAuthor: "+author+"\nIs available: "+available;
     }
 
     public int getId() {
@@ -29,7 +36,7 @@ public class Book {
         return author;
     }
 
-    public boolean isAviable() {
-        return isAviable;
+    public boolean getAvailable() {
+        return available;
     }
 }

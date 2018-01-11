@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1091071344922",
+    "firebase_url": "https://ruplibapp.firebaseio.com",
+    "project_id": "ruplibapp",
+    "storage_bucket": "ruplibapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1091071344922:android:c3a42cdcb7b74dbc",
+        "android_client_info": {
+          "package_name": "com.example.nenezoid.ruplibapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1091071344922-u4ea9smp1gcvr1rvk5dj48p0a5lmuhbl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.nenezoid.ruplibapp",
+            "certificate_hash": "9f2b550389ba72f7233de0dfa51997098b5ac4a2"
+          }
+        },
+        {
+          "client_id": "1091071344922-r1edjg85vour1bgtt55jq3uem38f5kpn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMdw_yaMaLW7yGJStWprw4RXeLBgLpa7Q"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1091071344922-r1edjg85vour1bgtt55jq3uem38f5kpn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

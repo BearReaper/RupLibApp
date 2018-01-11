@@ -1,5 +1,6 @@
 package com.example.nenezoid.ruplibapp;
 
+import android.app.ListActivity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -29,56 +31,46 @@ import java.util.List;
 
 public class SearchActivity extends AppCompatActivity {
 
-    ArrayList<String> list = new ArrayList<>();
+    ArrayList<Book> list = new ArrayList<>();
     ListView listy;
-
-
-
+    String strSearchKey ="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search2);
 
-        //Some code for fetching the search key and verify by toast
-        Intent intent = getIntent();
-        Bundle b = intent.getExtras();
-        String strSearchKey ="";
-        if(b!=null)
-            strSearchKey = (String)b.getString("Title");
-        Toast.makeText(SearchActivity.this,strSearchKey,Toast.LENGTH_LONG).show(); // find out if the intent went OK
-
-        //final TextView resText = (TextView) findViewById(R.id.resposeText); // instance an object for the http resonse
-
-        listy = findViewById(R.id.myList);
-        final ArrayAdapter<String> itemsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,list);
-        listy.setAdapter(itemsAdapter);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Books");
 
-        myRef.addChildEventListener(new ChildEventListener() {
+        //Some code for fetching the search key and verify by toast
+        final Intent intent = getIntent();
+        Bundle b = intent.getExtras();
+        if(b!=null)
+            strSearchKey = (String)b.getString("Title");
+        Toast.makeText(SearchActivity.this,strSearchKey,Toast.LENGTH_LONG).show(); // find out if the intent went OK
+        //final TextView resText = (TextView) findViewById(R.id.resposeText); // instance an object for the http resonse
+
+        listy = findViewById(R.id.myList);
+        final ArrayAdapter<Book> itemsAdapter = new ArrayAdapter<Book>(this, android.R.layout.simple_list_item_1,list);
+        listy.setAdapter(itemsAdapter);
+
+        Query query = myRef.orderByChild("title");
+        query.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                String res = dataSnapshot.getValue().toString();
-                //resText.setText(res);
-                list.add(res);
-                itemsAdapter.notifyDataSetChanged();
-                //Toast.makeText(getApplicationContext(),res,Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot sanpy :dataSnapshot.getChildren() )
+                {
+                    Book booky = sanpy.getValue(Book.class);
+                    if(booky!=null)
+                    {
+                        if(booky.getTitle().contains(strSearchKey))
+                        {
+                            list.add(booky);
+                            itemsAdapter.notifyDataSetChanged();
+                        }
+                    }
+                }
             }
 
             @Override
@@ -87,11 +79,25 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
+
         listy.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 //Some code for fetching and using the gridview possition and etc.
+
+                Intent intent = new Intent(SearchActivity.this,ShowBookActivity.class);
+                intent.putExtra("Key",position);
+                // Need to figure a way to pass the book to next activity
+                //
+                int idg = (int)id;
+                Book book =list.get(idg);
+                intent.putExtra("Returned Title",book.getTitle());
+                intent.putExtra("Returned Author",book.getAuthor());
+                intent.putExtra("Returned Id",book.getId());
+                intent.putExtra("Returned Bool",book.getAvailable());
+                //Toast.makeText(getApplicationContext(),str,Toast.LENGTH_LONG).show();
+                startActivity(intent);
             }
         });
 
@@ -164,6 +170,25 @@ public class SearchActivity extends AppCompatActivity {
 
 
 //Now set some values into the db
+
+        /*myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String value = dataSnapshot.getValue(String.class);
+                //Log.d(TAG, "Value is: " + value);
+                resText.setText(value);
+                Toast.makeText(getApplicationContext(),value,Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Failed to read value
+                //Log.w(TAG, "Failed to read value.", error.toException());
+                //Toast.makeText(getApplicationContext(),"this is error",Toast.LENGTH_SHORT).show();
+
+            }
+        });*/
+
 //        Book booky = new Book(13,"Networking","NezDog",true);
 //        myRef.child("Books").child("Book1");
 //        myRef.setValue(booky);
@@ -180,20 +205,58 @@ public class SearchActivity extends AppCompatActivity {
 
 
 
+
+// Uncommet to get all db in one item on listView
         /*myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String value = dataSnapshot.getValue(String.class);
-                //Log.d(TAG, "Value is: " + value);
-                resText.setText(value);
-                Toast.makeText(getApplicationContext(),value,Toast.LENGTH_SHORT).show();
+//                Book booky = dataSnapshot.getValue(Book.class);
+//                String resnik = booky.getTitle();
+//                list.add(resnik);
+                String res = dataSnapshot.getValue().toString();
+                Toast.makeText(getApplicationContext(),res,Toast.LENGTH_LONG).show();
+                list.add(res);
+                itemsAdapter.notifyDataSetChanged();
+
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                // Failed to read value
-                //Log.w(TAG, "Failed to read value.", error.toException());
-                //Toast.makeText(getApplicationContext(),"this is error",Toast.LENGTH_SHORT).show();
+
+            }
+        });*/
+
+// Better way - get all matches on different list items
+        /*myRef.orderByChild("title").equalTo(strSearchKey).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                String res = dataSnapshot.getValue().toString();
+                //resText.setText(res);
+                list.add(res);
+//                Book booky = dataSnapshot.getValue(Book.class);
+//                String resnik = booky.getTitle();
+//                list.add(resnik);
+                itemsAdapter.notifyDataSetChanged();
+                //Toast.makeText(getApplicationContext(),res,Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
             }
         });*/
