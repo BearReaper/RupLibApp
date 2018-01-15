@@ -22,7 +22,7 @@ public class Book {
 
     public String toString()
     {
-        return "Title: "+title+"\nAuthor: "+author+"\nIs available: "+available;
+        return "Title: "+title+"\nAuthor: "+author+"\nIs available: "+(available?"yes":"no");
     }
 
     public String getImageUrl() {
