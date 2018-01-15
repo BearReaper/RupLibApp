@@ -3,6 +3,7 @@ package com.example.nenezoid.ruplibapp;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,10 +22,12 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class SearchActivity extends AppCompatActivity {
 
+    HashMap<String,String> keys=new HashMap<>();
     ArrayList<Book> list = new ArrayList<>();
     //ListView listy;
     String strSearchKey ="";
@@ -41,6 +44,10 @@ public class SearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search2);
+        SharedPreferences sp= getSharedPreferences("LibData", 0);
+        final String strSrchType = sp.getString("SearchType", null);
+        if (strSrchType!= null)
+            Toast.makeText(getApplicationContext(),"Hello "+strSrchType,Toast.LENGTH_LONG).show() ;
         progressDialog = new ProgressDialog(SearchActivity.this);
 
         // Setting up message in Progress dialog.
@@ -55,34 +62,47 @@ public class SearchActivity extends AppCompatActivity {
         // Setting RecyclerView layout as LinearLayout.
         recyclerView.setLayoutManager(new LinearLayoutManager(SearchActivity.this));
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Books");
+        final DatabaseReference myRef = database.getReference("Books");
         progressDialog.show();
+
         //Some code for fetching the search key and verify by toast
         final Intent intent = getIntent();
         Bundle b = intent.getExtras();
         if(b!=null)
-            strSearchKey = (String)b.getString("Title");
+            strSearchKey = (String)b.getString("SearchKey");
         Toast.makeText(SearchActivity.this,strSearchKey,Toast.LENGTH_LONG).show(); // find out if the intent went OK
 
 
 
 
-        Query query = myRef.orderByChild("title");
+        Query query = myRef.orderByChild(strSrchType);
         query.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(final DataSnapshot dataSnapshot) {
 
-                for(DataSnapshot sanpy :dataSnapshot.getChildren() )
+                for(DataSnapshot snapy :dataSnapshot.getChildren() )
                 {
-                    Book booky = sanpy.getValue(Book.class);
+                    snapy.getKey();
+                    Book booky = snapy.getValue(Book.class);
                     if(booky!=null)
                     {
-                        if(booky.getTitle().toLowerCase().contains(strSearchKey.toLowerCase()))
-                        {
-                            list.add(booky);
+                        switch (strSrchType){
+                            case "title":
+                                if(booky.getTitle().toLowerCase().contains(strSearchKey.toLowerCase()))
+                                {
+                                    list.add(booky);
+                                    keys.put(booky.getTitle(),snapy.getKey());
+                                }
+                            break;
+                            case "author":
+                                if(booky.getAuthor().toLowerCase().contains(strSearchKey.toLowerCase()))
+                                {
+                                    list.add(booky);
+                                    keys.put(booky.getTitle(),snapy.getKey());
+                                }
+                            break;
 
                         }
-
                     }
                 }
                 adapter = new RecyclerViewAdapter(getApplicationContext(), list,new OnItemClickListener() {
@@ -92,11 +112,13 @@ public class SearchActivity extends AppCompatActivity {
                         Intent intent = new Intent(SearchActivity.this,ShowBookActivity.class);
 
 
+
+                        intent.putExtra("Returned Key",keys.get(book.getTitle()));
                         intent.putExtra("Returned Title",book.getTitle());
                         intent.putExtra("Returned Author",book.getAuthor());
                         intent.putExtra("Returned Id",book.getId());
                         intent.putExtra("Returned Bool",book.getAvailable());
-
+                        intent.putExtra("bookurl",book.getImageUrl());
                         startActivity(intent);
                     }
                     });
