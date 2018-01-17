@@ -14,6 +14,9 @@ import android.view.View;
         import com.google.android.gms.tasks.Task;
         import com.google.firebase.auth.AuthResult;
         import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 public class SignUpActivity extends AppCompatActivity{
 
@@ -91,6 +94,16 @@ public class SignUpActivity extends AppCompatActivity{
                         if(task.isSuccessful()){
                             //display some message here
 
+                            String instanceId = FirebaseInstanceId.getInstance().getToken();
+
+                            FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                            if (firebaseUser != null) {
+                                FirebaseDatabase.getInstance().getReference()
+                                        .child("users")
+                                        .child(firebaseUser.getUid())
+                                        .child("instanceId")
+                                        .setValue(instanceId);
+                            }
                             Toast.makeText(SignUpActivity.this,"Successfully registered",Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(getApplicationContext(),ProfileActivity.class);
                             startActivity(intent);

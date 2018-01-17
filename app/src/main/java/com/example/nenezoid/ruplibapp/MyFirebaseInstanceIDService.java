@@ -6,6 +6,9 @@ package com.example.nenezoid.ruplibapp;
 
 import android.util.Log;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 
@@ -18,11 +21,16 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
 
     @Override
     public void onTokenRefresh() {
-        // Get updated InstanceID token.
-        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-        Log.d(TAG, "Refreshed token: " + refreshedToken);
+        super.onTokenRefresh();
+        String instanceId = FirebaseInstanceId.getInstance().getToken();
 
-        // TODO: Implement this method to send any registration to your app's servers.
-        System.out.println("Registration.onTokenRefresh TOKEN: " + refreshedToken );
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (firebaseUser != null) {
+            FirebaseDatabase.getInstance().getReference()
+                    .child("users")
+                    .child(firebaseUser.getUid())
+                    .child("instanceId")
+                    .setValue(instanceId);
+        }
     }
 }

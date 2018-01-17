@@ -37,12 +37,12 @@
         android:hint="Enter password"
         android:inputType="textPassword" />
 
-    <Button
-        android:id="@+id/buttonSignin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:text="Signup" />
+        <Button
+            android:id="@+id/buttonSignin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:text="Log in" />
 
     <TextView
         android:text="Not have an account? Signup Here"

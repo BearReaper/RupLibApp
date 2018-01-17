@@ -39,12 +39,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setWhen(System.currentTimeMillis())
                 .setTicker("Hearty365")
-                .setPriority(Notification.PRIORITY_MAX) // this is deprecated in API 26 but you can still use for below 26. check below update for 26 API
+                .setPriority(Notification.PRIORITY_MAX)
+                .setSmallIcon(R.drawable.ic_book) // this is deprecated in API 26 but you can still use for below 26. check below update for 26 API
                 .setContentTitle("Default notification")
                 .setContentText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.")
                 .setContentInfo("Info");
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
         notificationManager.notify(0, notificationBuilder.build());
 
         //System.out.println("Just message "+message.getNotification().getBody());
