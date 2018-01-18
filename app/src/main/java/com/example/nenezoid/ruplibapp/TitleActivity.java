@@ -14,15 +14,15 @@ public class TitleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_title);
-        setTitle("Search By Title");
 
         SharedPreferences sp= getSharedPreferences("LibData", 0);
         String restoredText= sp.getString("SearchType", null);
         if (restoredText!= null)
             Toast.makeText(getApplicationContext(),"Hello "+restoredText,Toast.LENGTH_LONG).show() ;
 
-
+        setTitle("Search by "+restoredText);
         final EditText title = (EditText)findViewById(R.id.TitleInEditText);
+        title.setHint("Enter name to search by "+restoredText);
 
         findViewById(R.id.searchButton).setOnClickListener(new View.OnClickListener() {
             @Override
