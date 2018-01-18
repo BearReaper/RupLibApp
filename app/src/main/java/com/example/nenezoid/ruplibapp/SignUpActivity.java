@@ -105,6 +105,11 @@ public class SignUpActivity extends AppCompatActivity{
                                         .setValue(instanceId);
                                 FirebaseDatabase.getInstance().getReference()
                                         .child("users")
+                                        .child(firebaseUser.getUid())
+                                        .child("hasBook")
+                                        .setValue(false);
+                                FirebaseDatabase.getInstance().getReference()
+                                        .child("users")
                                         .child(firebaseUser.getUid()).child("order").setValue(false);
                             }
                             Toast.makeText(SignUpActivity.this,"Successfully registered",Toast.LENGTH_LONG).show();

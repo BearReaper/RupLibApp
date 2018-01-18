@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
                     .child(firebaseUser.getUid())
                     .child("instanceId")
                     .setValue(instanceId);
-            
+
         }
 
         findViewById(R.id.titleButton).setOnClickListener(new View.OnClickListener() {

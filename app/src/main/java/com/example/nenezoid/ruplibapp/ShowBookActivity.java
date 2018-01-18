@@ -67,30 +67,54 @@ public class ShowBookActivity extends AppCompatActivity {
         ImageView iv = findViewById(R.id.imageView);
         Glide.with(getApplicationContext()).load(bookurl).into(iv);
         Button resetButton=(Button)findViewById(R.id.orderButton);
-        FirebaseAuth mAuth= FirebaseAuth.getInstance();
+        final FirebaseAuth mAuth= FirebaseAuth.getInstance();
         resetButton.setVisibility(View.GONE);
-        if(mAuth.getCurrentUser()!=null&&avi)
+        if(mAuth.getCurrentUser()!=null)
         {
             resetButton.setVisibility(View.VISIBLE);
         }
-
+        final boolean availble=avi;
         final String strKeyy = bookKey;
         resetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final FirebaseDatabase database = FirebaseDatabase.getInstance();
                 final DatabaseReference myRef = database.getReference("Books");
-                myRef.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        myRef.child(strKeyy).child("available").setValue(false);
-                    }
+                final DatabaseReference userRef = database.getReference("users").child(mAuth.getCurrentUser().getUid());
+                if(availble) {
+                    myRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            myRef.child(strKeyy).child("available").setValue(false);
+                            userRef.child("hasBook").setValue(true);
+                            userRef.child("order").setValue(false);
+                        }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
 
-                    }
-                });
+                        }
+                    });
+                }
+                else {
+                    userRef.child("hasBook").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+
+                            if(dataSnapshot.getValue().equals(false))
+                                userRef.child("order").setValue(true);
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+
+                }
+
+
                 //Intent intent = new Intent(getApplicationContext(),ShowBookActivity.class);
                 intent.putExtra("Returned Bool",false);
                 startActivity(intent);
