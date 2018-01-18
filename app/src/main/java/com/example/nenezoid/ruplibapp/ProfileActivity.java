@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -39,6 +41,12 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         //getting current user
         FirebaseUser user = firebaseAuth.getCurrentUser();
+        String instanceId = FirebaseInstanceId.getInstance().getToken();
+        FirebaseDatabase.getInstance().getReference()
+                .child("users")
+                .child(user.getUid())
+                .child("instanceId")
+                .setValue(instanceId);
 
         //initializing views
         textViewUserEmail = (TextView) findViewById(R.id.textViewUserEmail);
