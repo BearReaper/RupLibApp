@@ -25,10 +25,6 @@ import java.net.URLDecoder;
 
 import static java.security.AccessController.getContext;
 
-
-/**
- * @author ton1n8o - antoniocarlos.dev@gmail.com on 6/13/16.
- */
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private static final String TAG = "MyGcmListenerService";
@@ -52,7 +48,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             mChannel.setLightColor(Color.BLUE);
             notificationManager.createNotificationChannel(mChannel);
             notificationBuilder = new NotificationCompat.Builder(this, chanel_id);
-        } else {
+        }
+        else {
             notificationBuilder = new NotificationCompat.Builder(this);
         }
         notificationBuilder.setAutoCancel(true)
@@ -64,6 +61,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setContentTitle(message.getNotification().getTitle())
                 .setContentText(message.getNotification().getBody())
                 .setContentInfo("Info");
+        Intent resultIntent= new Intent(this, MainActivity.class);
+        PendingIntent resultPendingIntent= PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        notificationBuilder.setContentIntent(resultPendingIntent);
 
 
         notificationManager.notify(0, notificationBuilder.build());
