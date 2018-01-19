@@ -40,14 +40,15 @@ public class ShowBookActivity extends AppCompatActivity {
         String strLoc = "";
         Boolean avi=false;
         String bookurl="";
+        String bookDescripation="";
         if(b!=null) {
             bookKey = b.getString("Returned Key");
             strTitle = b.getString("Returned Title");
             strAuthor = b.getString("Returned Author");
             strLoc= b.getString("Returned Id");
+            bookDescripation=b.getString("Returned Description");
             avi=b.getBoolean("Returned Bool");
             bookurl=b.getString("bookurl");
-
 
         }
         Toast.makeText(getApplicationContext(),bookKey,Toast.LENGTH_SHORT).show();
@@ -63,7 +64,8 @@ public class ShowBookActivity extends AppCompatActivity {
         avi_tv.setText("Is Available: "+avi);
         TextView loc_tv = findViewById(R.id.idTextView);
         loc_tv.setText("Book Location: "+strLoc);
-
+        TextView descriptionView= findViewById(R.id.descriptionView);
+        descriptionView.setText("description:"+bookDescripation);
         ImageView iv = findViewById(R.id.imageView);
         Glide.with(getApplicationContext()).load(bookurl).into(iv);
         Button resetButton=(Button)findViewById(R.id.orderButton);

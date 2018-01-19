@@ -126,6 +126,7 @@ public class SearchActivity extends AppCompatActivity {
                         intent.putExtra("Returned Id",book.getId());
                         intent.putExtra("Returned Bool",book.getAvailable());
                         intent.putExtra("bookurl",book.getImageUrl());
+                        intent.putExtra("Returned Description",book.getDescription());
                         startActivity(intent);
                     }
                     });
