@@ -62,6 +62,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setContentText(message.getNotification().getBody())
                 .setContentInfo("Info");
         Intent resultIntent= new Intent(this, MainActivity.class);
+
         PendingIntent resultPendingIntent= PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         notificationBuilder.setContentIntent(resultPendingIntent);
 

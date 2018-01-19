@@ -19,9 +19,19 @@ public class TitleActivity extends AppCompatActivity {
         String restoredText= sp.getString("SearchType", null);
         if (restoredText == null)
             return;
-
-        setTitle("Search by "+restoredText);
         final EditText title = (EditText)findViewById(R.id.TitleInEditText);
+        if(restoredText.contains("free"))
+        {
+            setTitle("Free Search");
+            title.setHint("Enter name to search by "+restoredText);
+        }
+        else
+
+        {
+            setTitle("Search by " + restoredText);
+            title.setHint("Enter name to search by "+restoredText);
+        }
+
         title.setHint("Enter name to search by "+restoredText);
 
         findViewById(R.id.searchButton).setOnClickListener(new View.OnClickListener() {

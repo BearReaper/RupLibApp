@@ -117,9 +117,6 @@ public class SearchActivity extends AppCompatActivity {
                     public void onItemClick(Book book)
                     {
                         Intent intent = new Intent(SearchActivity.this,ShowBookActivity.class);
-
-
-
                         intent.putExtra("Returned Key",keys.get(book.getTitle()));
                         intent.putExtra("Returned Title",book.getTitle());
                         intent.putExtra("Returned Author",book.getAuthor());
@@ -149,98 +146,3 @@ public class SearchActivity extends AppCompatActivity {
 
     }
 }
-
-
-
-
-//Now set some values into the db
-
-        /*myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String value = dataSnapshot.getValue(String.class);
-                //Log.d(TAG, "Value is: " + value);
-                resText.setText(value);
-                Toast.makeText(getApplicationContext(),value,Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Failed to read value
-                //Log.w(TAG, "Failed to read value.", error.toException());
-                //Toast.makeText(getApplicationContext(),"this is error",Toast.LENGTH_SHORT).show();
-
-            }
-        });*/
-
-//        Book booky = new Book(13,"Networking","NezDog",true);
-//        myRef.child("Books").child("Book1");
-//        myRef.setValue(booky);
-//
-//        myRef = database.getReference("Books").child("Book2");
-//        Book booky2 = new Book(14,"Networking basics - advance mode","NezDog",true);
-//        myRef.child("Books").child("Book2");
-//        myRef.setValue(booky2);
-//
-//        myRef = database.getReference("Books").child("Book3");
-//        Book booky3 = new Book(15,"Networking & algo","NezDog",true);
-//        myRef.child("Books").child("Book3");
-//        myRef.setValue(booky3);
-
-
-
-
-// Uncommet to get all db in one item on listView
-        /*myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-//                Book booky = dataSnapshot.getValue(Book.class);
-//                String resnik = booky.getTitle();
-//                list.add(resnik);
-                String res = dataSnapshot.getValue().toString();
-                Toast.makeText(getApplicationContext(),res,Toast.LENGTH_LONG).show();
-                list.add(res);
-                itemsAdapter.notifyDataSetChanged();
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });*/
-
-// Better way - get all matches on different list items
-        /*myRef.orderByChild("title").equalTo(strSearchKey).addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                String res = dataSnapshot.getValue().toString();
-                //resText.setText(res);
-                list.add(res);
-//                Book booky = dataSnapshot.getValue(Book.class);
-//                String resnik = booky.getTitle();
-//                list.add(resnik);
-                itemsAdapter.notifyDataSetChanged();
-                //Toast.makeText(getApplicationContext(),res,Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });*/
