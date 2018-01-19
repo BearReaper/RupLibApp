@@ -65,7 +65,7 @@ public class ShowBookActivity extends AppCompatActivity {
         TextView loc_tv = findViewById(R.id.idTextView);
         loc_tv.setText("Book Location: "+strLoc);
         TextView descriptionView= findViewById(R.id.descriptionView);
-        descriptionView.setText("description:"+bookDescripation);
+        descriptionView.setText("Description: "+bookDescripation);
         ImageView iv = findViewById(R.id.imageView);
         Glide.with(getApplicationContext()).load(bookurl).into(iv);
         Button resetButton=(Button)findViewById(R.id.orderButton);
