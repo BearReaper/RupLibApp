@@ -20,7 +20,17 @@ public class Book {
     }
 
     public Book(){}
-
+    public boolean contains(String searchStr)
+    {
+        String str=searchStr.toLowerCase();
+        try {
+            return title.toLowerCase().contains(str) || author.toLowerCase().contains(str) || description.toLowerCase().contains(str);
+        }catch (Exception e)
+        {
+            return false;
+        }
+        
+    }
     public String toString()
     {
         return "Title: "+title+"\nAuthor: "+author+"\nLocation: "+id+"\nIs available: "+(available?"yes":"no");

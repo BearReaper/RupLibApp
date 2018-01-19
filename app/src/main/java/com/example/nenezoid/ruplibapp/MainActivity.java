@@ -79,5 +79,19 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(inetent);
             }
         });
+        findViewById(R.id.freeButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //some code for the sherdPref
+                SharedPreferences sp = getSharedPreferences("LibData", 0) ;
+                SharedPreferences.Editor sedt= sp.edit();
+                sedt.putString("SearchType", "free");
+                sedt.apply(); //maybe comit?
+
+                Intent inetent = new Intent (MainActivity.this,TitleActivity.class);
+                //getIntent().putExtra("SearchType","author");
+                startActivity(inetent);
+            }
+        });
     }
 }

@@ -46,8 +46,8 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search2);
         SharedPreferences sp= getSharedPreferences("LibData", 0);
         final String strSrchType = sp.getString("SearchType", null);
-        if (strSrchType!= null)
-            Toast.makeText(getApplicationContext(),"Hello "+strSrchType,Toast.LENGTH_LONG).show() ;
+        if (strSrchType== null)
+            return;
         progressDialog = new ProgressDialog(SearchActivity.this);
 
         // Setting up message in Progress dialog.
@@ -101,6 +101,13 @@ public class SearchActivity extends AppCompatActivity {
                                     keys.put(booky.getTitle(),snapy.getKey());
                                 }
                             break;
+                            case "free":
+                                if(booky.contains(strSearchKey))
+                                {
+                                    list.add(booky);
+                                    keys.put(booky.getTitle(),snapy.getKey());
+                                }
+                                break;
 
                         }
                     }

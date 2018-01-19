@@ -17,8 +17,8 @@ public class TitleActivity extends AppCompatActivity {
 
         SharedPreferences sp= getSharedPreferences("LibData", 0);
         String restoredText= sp.getString("SearchType", null);
-        if (restoredText!= null)
-            Toast.makeText(getApplicationContext(),"Hello "+restoredText,Toast.LENGTH_LONG).show() ;
+        if (restoredText == null)
+            return;
 
         setTitle("Search by "+restoredText);
         final EditText title = (EditText)findViewById(R.id.TitleInEditText);
