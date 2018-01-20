@@ -29,16 +29,6 @@
         app:layout_constraintTop_toTopOf="@+id/freeButton" />
 
     <Button
-        android:id="@+id/upload"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="166dp"
-        android:text="@string/upload"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
         android:id="@+id/freeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
