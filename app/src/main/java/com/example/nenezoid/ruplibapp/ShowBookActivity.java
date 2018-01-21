@@ -51,7 +51,7 @@ public class ShowBookActivity extends AppCompatActivity {
             bookurl=b.getString("bookurl");
 
         }
-        Toast.makeText(getApplicationContext(),bookKey,Toast.LENGTH_SHORT).show();
+
         // find out if the intent went OK
         //Toast.makeText(getApplicationContext(),str,Toast.LENGTH_LONG).show();
         //ImageView iv = findViewById(R.id.resImageView);

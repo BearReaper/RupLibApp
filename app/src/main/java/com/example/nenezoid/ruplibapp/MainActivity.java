@@ -48,15 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        findViewById(R.id.upload).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                Intent inetent = new Intent (MainActivity.this,UploadImageActivity.class);
-                startActivity(inetent);
-
-            }
-        });
         findViewById(R.id.loginButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

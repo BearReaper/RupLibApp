@@ -70,7 +70,7 @@ public class SearchActivity extends AppCompatActivity {
         Bundle b = intent.getExtras();
         if(b!=null)
             strSearchKey = (String)b.getString("SearchKey");
-        Toast.makeText(SearchActivity.this,strSearchKey,Toast.LENGTH_LONG).show(); // find out if the intent went OK
+
 
 
 

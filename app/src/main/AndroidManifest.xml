@@ -30,9 +30,6 @@
         <activity android:name=".SignUpActivity" />
         <activity android:name=".ShowBookActivity" />
         <activity android:name=".ProfileActivity" />
-        <activity android:name=".DisplayImagesActivity" />
-        <activity android:name=".UploadImageActivity">
-        </activity>
 
         <service
             android:name=".MyFirebaseMessagingService">
