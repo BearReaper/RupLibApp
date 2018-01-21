@@ -71,10 +71,6 @@ public class SearchActivity extends AppCompatActivity {
         if(b!=null)
             strSearchKey = (String)b.getString("SearchKey");
 
-
-
-
-
         Query query = myRef.orderByChild(strSrchType);
         query.addValueEventListener(new ValueEventListener() {
             @Override
@@ -108,7 +104,6 @@ public class SearchActivity extends AppCompatActivity {
                                     keys.put(booky.getTitle(),snapy.getKey());
                                 }
                                 break;
-
                         }
                     }
                 }
@@ -127,22 +122,14 @@ public class SearchActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                     });
-
                 recyclerView.setAdapter(adapter);
                 // Hiding the progress dialog.
                 progressDialog.dismiss();
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 progressDialog.dismiss();
             }
         });
-
-
-
-
-
-
     }
 }

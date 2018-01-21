@@ -32,4 +32,14 @@
     <string name="sign_up">Sign Up</string>
     <string name="some_random_desc">some random desc</string>
     <string name="search_by_author">Search by author</string>
+
+    <string name="title_activity_scrolling">ScrollingActivity</string>
+
+    <string name="description">description</string>
+    <string name="gtgg">gtgg</string>
+    <string name="order_book">Order Book</string>
+
+    <string name="is_available">Is Available:</string>
+    <string name="author">Author:</string>
+    <string name="title">Title:</string>
 </resources>

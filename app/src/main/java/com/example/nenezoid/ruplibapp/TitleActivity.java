@@ -1,5 +1,8 @@
 package com.example.nenezoid.ruplibapp;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -34,6 +37,8 @@ public class TitleActivity extends AppCompatActivity {
 
         title.setHint("Enter name to search by "+restoredText);
 
+        final Context context = this;
+
         findViewById(R.id.searchButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,10 +47,22 @@ public class TitleActivity extends AppCompatActivity {
                 //Send intent to SearchActivity hopefully
 
                 String strSrchKey = new StringBuilder(title.getText().toString()).toString();
-
-                Intent intush = new Intent(TitleActivity.this,SearchActivity.class);
-                intush.putExtra("SearchKey" , strSrchKey);
-                startActivity(intush);
+                if(strSrchKey.isEmpty()){
+                    AlertDialog.Builder alertDialogBuilder= new AlertDialog.Builder(context);
+                    alertDialogBuilder.setTitle("Wrong input!");
+                    alertDialogBuilder.setMessage("Enter some search key").setPositiveButton("OK",new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,int id) {
+                            dialog.cancel();
+                        }
+                    });
+                    AlertDialog alertDialog= alertDialogBuilder.create();
+                    alertDialog.show();
+                }
+                else{
+                    Intent intush = new Intent(TitleActivity.this,SearchActivity.class);
+                    intush.putExtra("SearchKey" , strSrchKey);
+                    startActivity(intush);
+                }
             }
         });
     }
