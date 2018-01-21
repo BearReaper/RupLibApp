@@ -28,34 +28,35 @@
                 android:layout_marginTop="25dp"
                 android:text="Title:" />
         </TableRow>
-        <TableRow>
+        <TableRow android:gravity="left|fill_vertical">
+
             <TextView
                 android:id="@+id/authorTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="21dp"
+                android:layout_marginStart="7dp"
+                android:layout_marginLeft="7dp"
                 android:text="Author:"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
         </TableRow>
-        <TableRow>
+        <TableRow android:gravity="left|fill_vertical">
             <TextView
                 android:id="@+id/aviTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="7dp"
                 android:text="Is Available:"
                 app:layout_constraintBottom_toTopOf="@+id/imageView"
                 app:layout_constraintStart_toStartOf="parent" />
-        </TableRow>
-        <TableRow>
+        </TableRow >
+        <TableRow android:gravity="left|fill_vertical">
             <TextView
                 android:id="@+id/idTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="7dp"
                 android:layout_marginTop="20dp"
                 android:text="TextView"
                 app:layout_constraintStart_toStartOf="parent"
@@ -75,25 +76,29 @@
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="160dp"
+                android:layout_height="200dp"
                 android:layout_marginLeft="5dip"
                 android:layout_marginRight="5dip"
                 android:layout_marginTop="10dip"
-                android:contentDescription="gtgg"
-                android:src="@mipmap/ic_launcher"
 
-                />
+                android:contentDescription="gtgg"
+
+                android:maxHeight="200dp"
+                android:maxWidth="160dp"
+                android:minHeight="200dp"
+                android:minWidth="160dp"
+                android:src="@mipmap/ic_launcher" />
         </TableRow>
 
-        <TableRow android:layout_width="374dp">
+        <TableRow android:layout_width="374dp" android:gravity="left|fill_vertical">
 
             <TextView
                 android:id="@+id/descriptionView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="77dp"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="7dp"
                 android:text="description"
 
                 />
