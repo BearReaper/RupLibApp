@@ -80,8 +80,6 @@ public class SearchActivity extends AppCompatActivity {
             @Override
 
             public void onDataChange(final DataSnapshot dataSnapshot) {
-                int counter =0;
-
                 for(DataSnapshot snapy :dataSnapshot.getChildren() )
                 {
                     snapy.getKey();
@@ -94,7 +92,6 @@ public class SearchActivity extends AppCompatActivity {
                                 {
                                     list.add(booky);
                                     keys.put(booky.getTitle(),snapy.getKey());
-                                    counter++;
                                 }
                             break;
                             case "author":
@@ -114,10 +111,7 @@ public class SearchActivity extends AppCompatActivity {
                         }
                     }
                 }
-                String str = Integer.toString(counter);
-
-
-                if(counter==0)
+                if(list.isEmpty())
                 {
                     AlertDialog.Builder alertDialogBuilder= new AlertDialog.Builder(context);
                     alertDialogBuilder.setTitle("Wrong input!");
