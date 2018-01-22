@@ -90,7 +90,7 @@ public class ShowBookActivity extends AppCompatActivity {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 myRef.child(strKeyy).child("available").setValue(false);
-                                userBookRef.child(id).child("have").setValue(true);
+                                userBookRef.child(id).child(userId).setValue("got it");
 
                             }
 
@@ -101,8 +101,8 @@ public class ShowBookActivity extends AppCompatActivity {
                         });
                     }
                     else {
-                        userBookRef.child(id).child(userId).setValue(true);
-                        userBookRef.child(id).child("have").setValue(false);
+                        userBookRef.child(id).child(userId).setValue("order");
+
 
                     }
 
