@@ -52,9 +52,7 @@ public class ShowBookActivity extends AppCompatActivity {
 
         }
 
-        // find out if the intent went OK
-        //Toast.makeText(getApplicationContext(),str,Toast.LENGTH_LONG).show();
-        //ImageView iv = findViewById(R.id.resImageView);
+
 
         TextView title_tv = findViewById(R.id.titleTextView);
         title_tv.setText("Title: "+strTitle);
@@ -77,43 +75,35 @@ public class ShowBookActivity extends AppCompatActivity {
         }
         final boolean availble=avi;
         final String strKeyy = bookKey;
+        final String userId=mAuth.getCurrentUser().getUid();
+
         resetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final FirebaseDatabase database = FirebaseDatabase.getInstance();
-                final DatabaseReference myRef = database.getReference("Books");
-                final DatabaseReference userRef = database.getReference("users").child(mAuth.getCurrentUser().getUid());
-                if(availble) {
-                    myRef.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            myRef.child(strKeyy).child("available").setValue(false);
-                            userRef.child("hasBook").setValue(true);
-                            userRef.child("order").setValue(false);
-                        }
+                if(userId!=null){
+                    final FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    final DatabaseReference myRef = database.getReference("Books");
+                    final DatabaseReference userBookRef = database.getReference("users").child(userId);
+                    if(availble) {
+                        myRef.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                myRef.child(strKeyy).child("available").setValue(userId);
+                                userBookRef.child(strKeyy).child(userId).setValue(false);
 
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
+                            }
 
-                        }
-                    });
-                }
-                else {
-                    userRef.child("hasBook").addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
 
-                            if(dataSnapshot.getValue().equals(false))
-                                userRef.child("order").setValue(true);
-                        }
+                            }
+                        });
+                    }
+                    else {
+                        userBookRef.child(strKeyy).child(userId).setValue(true);
+                        userBookRef.child(strKeyy).child("have").setValue(false);
 
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-
-
+                    }
                 }
 
 
