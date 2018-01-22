@@ -74,22 +74,23 @@ public class ShowBookActivity extends AppCompatActivity {
             resetButton.setVisibility(View.VISIBLE);
         }
         final boolean availble=avi;
+        final String id=strLoc;
         final String strKeyy = bookKey;
         final String userId=mAuth.getCurrentUser().getUid();
 
         resetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(userId!=null){
+
                     final FirebaseDatabase database = FirebaseDatabase.getInstance();
                     final DatabaseReference myRef = database.getReference("Books");
-                    final DatabaseReference userBookRef = database.getReference("users").child(userId);
+                    final DatabaseReference userBookRef = database.getReference("usersbook");
                     if(availble) {
                         myRef.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
-                                myRef.child(strKeyy).child("available").setValue(userId);
-                                userBookRef.child(strKeyy).child(userId).setValue(false);
+                                myRef.child(strKeyy).child("available").setValue(false);
+                                userBookRef.child(id).child("have").setValue(true);
 
                             }
 
@@ -100,11 +101,11 @@ public class ShowBookActivity extends AppCompatActivity {
                         });
                     }
                     else {
-                        userBookRef.child(strKeyy).child(userId).setValue(true);
-                        userBookRef.child(strKeyy).child("have").setValue(false);
+                        userBookRef.child(id).child(userId).setValue(true);
+                        userBookRef.child(id).child("have").setValue(false);
 
                     }
-                }
+
 
 
                 //Intent intent = new Intent(getApplicationContext(),ShowBookActivity.class);
