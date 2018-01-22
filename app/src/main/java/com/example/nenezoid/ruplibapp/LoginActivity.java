@@ -1,6 +1,9 @@
 package com.example.nenezoid.ruplibapp;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -19,7 +22,6 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
-
     //defining views
     private Button buttonSignIn;
     private EditText editTextEmail;
@@ -32,11 +34,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     //progress dialog
     private ProgressDialog progressDialog;
 
+    final Context context=this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        setTitle("Login Page");
 
         //getting firebase auth object
         firebaseAuth = FirebaseAuth.getInstance();
@@ -97,6 +101,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             //start the profile activity
                             finish();
                             startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                        }
+                        else{
+                            AlertDialog.Builder alertDialogBuilder= new AlertDialog.Builder(context);
+                            alertDialogBuilder.setTitle("Login Failed!");
+                            alertDialogBuilder.setMessage("Enter check or credentials").setPositiveButton("OK",new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog,int id) {
+                                    dialog.cancel();
+                                }
+                            });
+                            AlertDialog alertDialog= alertDialogBuilder.create();
+                            alertDialog.show();
                         }
                     }
                 });

@@ -26,13 +26,13 @@ public class TitleActivity extends AppCompatActivity {
         if(restoredText.contains("free"))
         {
             setTitle("Free Search");
-            title.setHint("Enter name to search by "+restoredText);
+            title.setHint("Enter key to "+restoredText+" search");
         }
         else
 
         {
             setTitle("Search by " + restoredText);
-            title.setHint("Enter name to search by "+restoredText);
+            title.setHint("Enter key to search by "+restoredText);
         }
 
         title.setHint("Enter name to search by "+restoredText);
@@ -47,7 +47,8 @@ public class TitleActivity extends AppCompatActivity {
                 //Send intent to SearchActivity hopefully
 
                 String strSrchKey = new StringBuilder(title.getText().toString()).toString();
-                if(strSrchKey.isEmpty()){
+                if(strSrchKey.isEmpty())
+                {
                     AlertDialog.Builder alertDialogBuilder= new AlertDialog.Builder(context);
                     alertDialogBuilder.setTitle("Wrong input!");
                     alertDialogBuilder.setMessage("Enter some search key").setPositiveButton("OK",new DialogInterface.OnClickListener() {
@@ -58,7 +59,7 @@ public class TitleActivity extends AppCompatActivity {
                     AlertDialog alertDialog= alertDialogBuilder.create();
                     alertDialog.show();
                 }
-                else{
+                else {
                     Intent intush = new Intent(TitleActivity.this,SearchActivity.class);
                     intush.putExtra("SearchKey" , strSrchKey);
                     startActivity(intush);

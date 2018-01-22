@@ -74,7 +74,7 @@ public class ShowBookActivity extends AppCompatActivity {
             resetButton.setVisibility(View.VISIBLE);
         }
         final boolean availble=avi;
-        final String id=strLoc;
+        final String id=strTitle;
         final String strKeyy = bookKey;
         final String userId=mAuth.getCurrentUser().getUid();
 
