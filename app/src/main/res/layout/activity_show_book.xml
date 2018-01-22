@@ -9,65 +9,71 @@
     tools:context="com.example.nenezoid.ruplibapp.ShowBookActivity"
     android:fillViewport="true">
 <RelativeLayout
-    android:layout_alignParentLeft="true"
-    android:layout_alignParentRight="true"
     android:layout_width="fill_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
+
     <TableLayout
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:stretchColumns="1">
 
-        <TableRow android:gravity="left|fill_vertical">
+        <TableRow android:gravity="start|fill_vertical">
 
             <TextView
                 android:id="@+id/titleTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="25dp"
-                android:text="Title:" />
+                android:layout_marginStart="7dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/title" />
         </TableRow>
-        <TableRow android:gravity="left|fill_vertical">
+
+        <TableRow android:gravity="start|fill_vertical">
 
             <TextView
                 android:id="@+id/authorTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="7dp"
-                android:layout_marginLeft="7dp"
-                android:text="Author:"
+
+                android:text="@string/author"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
         </TableRow>
-        <TableRow android:gravity="left|fill_vertical">
+
+        <TableRow android:gravity="start|fill_vertical">
+
             <TextView
                 android:id="@+id/aviTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
+
                 android:layout_marginStart="7dp"
-                android:text="Is Available:"
+                android:text="@string/is_available"
                 app:layout_constraintBottom_toTopOf="@+id/imageView"
                 app:layout_constraintStart_toStartOf="parent" />
-        </TableRow >
-        <TableRow android:gravity="left|fill_vertical">
+        </TableRow>
+
+        <TableRow android:gravity="start|fill_vertical">
+
             <TextView
                 android:id="@+id/idTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="7dp"
-                android:layout_marginTop="20dp"
-                android:text="TextView"
+
+                android:text="@string/textview"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/authorTextView" />
         </TableRow>
+
         <TableRow>
+
             <Button
                 android:id="@+id/orderButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Order Book"
+                android:text="@string/order_book"
                 tools:layout_editor_absoluteX="281dp"
                 tools:layout_editor_absoluteY="0dp" />
         </TableRow>
@@ -82,7 +88,7 @@
                 android:layout_marginRight="5dip"
                 android:layout_marginTop="10dip"
 
-                android:contentDescription="gtgg"
+                android:contentDescription="@string/gtgg"
 
                 android:maxHeight="200dp"
                 android:maxWidth="160dp"
@@ -91,7 +97,9 @@
                 android:src="@mipmap/ic_launcher" />
         </TableRow>
 
-        <TableRow android:layout_width="374dp" android:gravity="left|fill_vertical">
+        <TableRow
+            android:layout_width="374dp"
+            android:gravity="start|fill_vertical">
 
             <TextView
                 android:id="@+id/descriptionView"
@@ -99,7 +107,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="77dp"
                 android:layout_marginStart="7dp"
-                android:text="description"
+                android:text="@string/description"
 
                 />
         </TableRow>
