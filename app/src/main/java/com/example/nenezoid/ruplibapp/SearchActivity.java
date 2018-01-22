@@ -1,7 +1,10 @@
 package com.example.nenezoid.ruplibapp;
 
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -72,9 +75,12 @@ public class SearchActivity extends AppCompatActivity {
             strSearchKey = (String)b.getString("SearchKey");
 
         Query query = myRef.orderByChild(strSrchType);
+        final Context context = this;
         query.addValueEventListener(new ValueEventListener() {
             @Override
+
             public void onDataChange(final DataSnapshot dataSnapshot) {
+                int counter =0;
 
                 for(DataSnapshot snapy :dataSnapshot.getChildren() )
                 {
@@ -88,6 +94,7 @@ public class SearchActivity extends AppCompatActivity {
                                 {
                                     list.add(booky);
                                     keys.put(booky.getTitle(),snapy.getKey());
+                                    counter++;
                                 }
                             break;
                             case "author":
@@ -107,25 +114,45 @@ public class SearchActivity extends AppCompatActivity {
                         }
                     }
                 }
-                adapter = new RecyclerViewAdapter(getApplicationContext(), list,new OnItemClickListener() {
-                    @Override
-                    public void onItemClick(Book book)
-                    {
-                        Intent intent = new Intent(SearchActivity.this,ShowBookActivity.class);
-                        intent.putExtra("Returned Key",keys.get(book.getTitle()));
-                        intent.putExtra("Returned Title",book.getTitle());
-                        intent.putExtra("Returned Author",book.getAuthor());
-                        intent.putExtra("Returned Id",book.getId());
-                        intent.putExtra("Returned Bool",book.getAvailable());
-                        intent.putExtra("bookurl",book.getImageUrl());
-                        intent.putExtra("Returned Description",book.getDescription());
-                        startActivity(intent);
-                    }
+                String str = Integer.toString(counter);
+
+
+                if(counter==0)
+                {
+                    AlertDialog.Builder alertDialogBuilder= new AlertDialog.Builder(context);
+                    alertDialogBuilder.setTitle("Wrong input!");
+                    alertDialogBuilder.setMessage("The search key entered wasn't found on database. Try again").setPositiveButton("OK",new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,int id) {
+                            Intent intenty = new Intent(getApplicationContext(),TitleActivity.class);
+                            startActivity(intenty);
+                            progressDialog.hide();
+                        }
                     });
-                recyclerView.setAdapter(adapter);
-                // Hiding the progress dialog.
-                progressDialog.dismiss();
-            }
+                    AlertDialog alertDialog= alertDialogBuilder.create();
+                    alertDialog.show();
+                }
+                else{
+                    adapter = new RecyclerViewAdapter(getApplicationContext(), list,new OnItemClickListener() {
+                        @Override
+                        public void onItemClick(Book book)
+                        {
+                            Intent intent = new Intent(SearchActivity.this,ShowBookActivity.class);
+                            intent.putExtra("Returned Key",keys.get(book.getTitle()));
+                            intent.putExtra("Returned Title",book.getTitle());
+                            intent.putExtra("Returned Author",book.getAuthor());
+                            intent.putExtra("Returned Id",book.getId());
+                            intent.putExtra("Returned Bool",book.getAvailable());
+                            intent.putExtra("bookurl",book.getImageUrl());
+                            intent.putExtra("Returned Description",book.getDescription());
+                            startActivity(intent);
+                        }
+                    });
+                    recyclerView.setAdapter(adapter);
+                    // Hiding the progress dialog.
+                    progressDialog.dismiss();
+                }
+                }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 progressDialog.dismiss();
