@@ -63,38 +63,47 @@ public class ShowBookActivity extends AppCompatActivity {
         final String strKeyy = bookKey;
         if(mAuth.getCurrentUser()!=null)
         {
-            resetButton.setVisibility(View.VISIBLE);
-            final String userId=mAuth.getCurrentUser().getUid();
-            resetButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            final FirebaseDatabase database = FirebaseDatabase.getInstance();
+            final DatabaseReference userBookRef = database.getReference("usersbook");
+            if(userBookRef.child(id).child(mAuth.getCurrentUser().getUid())!=null)
+            {
+                System.out.print("none");
+            }
+            else
+            {
+                resetButton.setVisibility(View.VISIBLE);
+                final String userId=mAuth.getCurrentUser().getUid();
+                resetButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
-                    final FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    final DatabaseReference myRef = database.getReference("Books");
-                    final DatabaseReference userBookRef = database.getReference("usersbook");
-                    if(availble) {
-                        myRef.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                myRef.child(strKeyy).child("available").setValue(false);
-                                userBookRef.child(id).child(userId).setValue("got it");
 
-                            }
+                        final DatabaseReference myRef = database.getReference("Books");
 
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
+                        if(availble) {
+                            myRef.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    myRef.child(strKeyy).child("available").setValue(false);
+                                    userBookRef.child(id).child(userId).setValue("got it");
 
-                            }
-                        });
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+                        }
+                        else
+                            userBookRef.child(id).child(userId).setValue("order");
+
+                        //Intent intent = new Intent(getApplicationContext(),ShowBookActivity.class);
+                        intent.putExtra("Returned Bool",false);
+                        startActivity(intent);
                     }
-                    else
-                        userBookRef.child(id).child(userId).setValue("order");
-
-                    //Intent intent = new Intent(getApplicationContext(),ShowBookActivity.class);
-                    intent.putExtra("Returned Bool",false);
-                    startActivity(intent);
-                }
-            });
+                });
+            }
         }
 
 
