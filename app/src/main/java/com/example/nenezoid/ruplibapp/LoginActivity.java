@@ -105,7 +105,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         else{
                             AlertDialog.Builder alertDialogBuilder= new AlertDialog.Builder(context);
                             alertDialogBuilder.setTitle("Login Failed!");
-                            alertDialogBuilder.setMessage("Enter check or credentials").setPositiveButton("OK",new DialogInterface.OnClickListener() {
+                            alertDialogBuilder.setMessage("Enter check your credentials").setPositiveButton("OK",new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog,int id) {
                                     dialog.cancel();
                                 }

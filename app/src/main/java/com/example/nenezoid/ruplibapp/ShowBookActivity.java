@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
@@ -110,6 +111,7 @@ public class ShowBookActivity extends AppCompatActivity {
                                        userBookRef.child(id).child(userId).setValue("order");
 
                                    Intent titleIntent = new Intent(getApplicationContext(),TitleActivity.class);
+                                   Toast.makeText(getApplicationContext(),"Successfully ordered book: "+id,Toast.LENGTH_LONG).show();
 
                                    startActivity(titleIntent);
                                }
