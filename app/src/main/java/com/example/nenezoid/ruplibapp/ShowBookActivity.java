@@ -55,7 +55,7 @@ public class ShowBookActivity extends AppCompatActivity {
         descriptionView.setText("Description: "+bookDescripation);
         ImageView iv = findViewById(R.id.imageView);
         Glide.with(getApplicationContext()).load(bookurl).into(iv);
-        Button resetButton=(Button)findViewById(R.id.orderButton);
+        final Button resetButton=(Button)findViewById(R.id.orderButton);
         final FirebaseAuth mAuth= FirebaseAuth.getInstance();
         resetButton.setVisibility(View.GONE);
         final boolean availble=avi;
@@ -65,44 +65,66 @@ public class ShowBookActivity extends AppCompatActivity {
         {
             final FirebaseDatabase database = FirebaseDatabase.getInstance();
             final DatabaseReference userBookRef = database.getReference("usersbook");
-            if(userBookRef.child(id).child(mAuth.getCurrentUser().getUid())!=null)
-            {
-                System.out.print("none");
-            }
-            else
-            {
-                resetButton.setVisibility(View.VISIBLE);
-                final String userId=mAuth.getCurrentUser().getUid();
-                resetButton.setOnClickListener(new View.OnClickListener() {
+            userBookRef.child(id).child(mAuth.getCurrentUser().getUid()).orderByKey().addValueEventListener(new ValueEventListener() {
+
+
                     @Override
-                    public void onClick(View v) {
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                       boolean needorder=true;
+                       if(dataSnapshot.getValue()!=null) {
+                           if (dataSnapshot.getValue() instanceof String) {
+                               String userstatus = dataSnapshot.getValue().toString();
+                               if (userstatus.contains("got") || userstatus.contains("order")) {
+                                   needorder = false;
+                               }
+                           }
+                       }
+                       if(needorder)
+                       {
+                           resetButton.setVisibility(View.VISIBLE);
+                           final String userId=mAuth.getCurrentUser().getUid();
+                           resetButton.setOnClickListener(new View.OnClickListener() {
+                               @Override
+                               public void onClick(View v) {
 
 
-                        final DatabaseReference myRef = database.getReference("Books");
+                                   final DatabaseReference myRef = database.getReference("Books");
 
-                        if(availble) {
-                            myRef.addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    myRef.child(strKeyy).child("available").setValue(false);
-                                    userBookRef.child(id).child(userId).setValue("got it");
+                                   if(availble) {
+                                       myRef.addValueEventListener(new ValueEventListener() {
+                                           @Override
+                                           public void onDataChange(DataSnapshot dataSnapshot) {
+                                               myRef.child(strKeyy).child("available").setValue(false);
+                                               userBookRef.child(id).child(userId).setValue("got it");
 
-                                }
+                                           }
 
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
+                                           @Override
+                                           public void onCancelled(DatabaseError databaseError) {
 
-                                }
-                            });
-                        }
-                        else
-                            userBookRef.child(id).child(userId).setValue("order");
+                                           }
+                                       });
+                                   }
+                                   else
+                                       userBookRef.child(id).child(userId).setValue("order");
 
-                        //Intent intent = new Intent(getApplicationContext(),ShowBookActivity.class);
-                        intent.putExtra("Returned Bool",false);
-                        startActivity(intent);
+                                   Intent titleIntent = new Intent(getApplicationContext(),TitleActivity.class);
+
+                                   startActivity(titleIntent);
+                               }
+                           });
+                       }
                     }
-                });
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                   });
+
+
+
             }
         }
 
@@ -115,4 +137,4 @@ public class ShowBookActivity extends AppCompatActivity {
 
 
     }
-}
+
