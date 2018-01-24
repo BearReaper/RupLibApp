@@ -24,7 +24,6 @@ package="com.example.nenezoid.ruplibapp">
     </activity>
     <activity android:name=".MainActivity" />
     <activity android:name=".TitleActivity" />
-    <activity android:name=".GridActivity" />
     <activity android:name=".SearchActivity" />
     <activity android:name=".LoginActivity" />
     <activity android:name=".SignUpActivity" />
