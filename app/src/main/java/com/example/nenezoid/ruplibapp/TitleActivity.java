@@ -66,5 +66,13 @@ public class TitleActivity extends AppCompatActivity {
                 }
             }
         });
+
+        findViewById(R.id.homeButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TitleActivity.this,MainActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

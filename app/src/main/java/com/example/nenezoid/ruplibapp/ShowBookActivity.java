@@ -112,7 +112,6 @@ public class ShowBookActivity extends AppCompatActivity {
 
                                    Intent titleIntent = new Intent(getApplicationContext(),TitleActivity.class);
                                    Toast.makeText(getApplicationContext(),"Successfully ordered book: "+id,Toast.LENGTH_LONG).show();
-
                                    startActivity(titleIntent);
                                }
                            });

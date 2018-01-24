@@ -42,4 +42,5 @@
     <string name="is_available">Is Available:</string>
     <string name="author">Author:</string>
     <string name="title">Title:</string>
+    <string name="home">Home</string>
 </resources>
